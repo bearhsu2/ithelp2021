@@ -8,10 +8,13 @@ class StudentTest {
     @Test
     void full_name() {
 
-        Student student = new Student("Jordan", "Michael");
+        Student student = new Student("Michael", "Jordan");
 
         String actual = student.getFullName();
 
         assertEquals("Michael Jordan", actual);
     }
 }
+
+
+

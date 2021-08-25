@@ -8,7 +8,7 @@ public class Student {
     String lastName;
     String firstName;
 
-    public Student(String lastName, String firstName) {
+    public Student(String firstName, String lastName) {
         this.lastName = lastName;
         this.firstName = firstName;
     }
@@ -18,3 +18,10 @@ public class Student {
     }
 
 }
+
+
+
+
+
+
+
