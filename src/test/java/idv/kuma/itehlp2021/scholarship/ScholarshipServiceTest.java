@@ -183,4 +183,24 @@ class ScholarshipServiceTest {
 
         Assertions.assertEquals(0, actual);
     }
+
+    /////////
+    @Test
+    void WRONG_type() throws ScholarshipService.UnkownProgramTypeException {
+
+        ScholarshipService service = new ScholarshipService();
+
+        try {
+            service.calculate(new Transcript(
+                    "WRONG_TYPE",
+                    new Course("Algorithm", 100, 3),
+                    new Course("Computer Internet", 100, 2),
+                    new Course("Operating System", 100, 3)
+
+            ));
+        } catch (ScholarshipService.UnkownProgramTypeException e) {
+            Assertions.assertTrue(e.getMessage().contains("WRONG_TYPE"));
+        }
+
+    }
 }
