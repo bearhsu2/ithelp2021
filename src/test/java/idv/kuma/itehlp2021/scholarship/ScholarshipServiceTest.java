@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ScholarshipServiceTest {
 
     @Test
-    void bachelor_full_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void bachelor_full_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -22,7 +22,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void bachelor_half_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void bachelor_half_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -38,7 +38,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void bachelor_NO_courses() throws ScholarshipService.UnkownProgramTypeException {
+    void bachelor_NO_courses() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -48,7 +48,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void bachelor_NO_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void bachelor_NO_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -67,7 +67,7 @@ class ScholarshipServiceTest {
     ///
 
     @Test
-    void master_full_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void master_full_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -83,7 +83,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void master_half_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void master_half_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -99,7 +99,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void master_NO_courses() throws ScholarshipService.UnkownProgramTypeException {
+    void master_NO_courses() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -109,7 +109,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void master_NO_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void master_NO_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -127,7 +127,7 @@ class ScholarshipServiceTest {
 
     //////
     @Test
-    void PhD_full_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void PhD_full_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -143,7 +143,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void PhD_half_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void PhD_half_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -159,7 +159,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void PhD_NO_courses() throws ScholarshipService.UnkownProgramTypeException {
+    void PhD_NO_courses() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -169,7 +169,7 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void PhD_NO_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+    void PhD_NO_scholarship() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -186,7 +186,7 @@ class ScholarshipServiceTest {
 
     /////////
     @Test
-    void WRONG_type() throws ScholarshipService.UnkownProgramTypeException {
+    void WRONG_type() throws ScholarshipService.UnknownProgramTypeException {
 
         ScholarshipService service = new ScholarshipService();
 
@@ -198,7 +198,7 @@ class ScholarshipServiceTest {
                     new Course("Operating System", 100, 3)
 
             ));
-        } catch (ScholarshipService.UnkownProgramTypeException e) {
+        } catch (ScholarshipService.UnknownProgramTypeException e) {
             Assertions.assertTrue(e.getMessage().contains("WRONG_TYPE"));
         }
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ScholarshipService {
 
-    public int calculate(Transcript transcript) throws UnkownProgramTypeException {
+    public int calculate(Transcript transcript) throws UnknownProgramTypeException {
 
         String programType = transcript.getProgramType();
 
@@ -75,11 +75,11 @@ public class ScholarshipService {
             return 40_000;
         }
 
-        throw new UnkownProgramTypeException(programType);
+        throw new UnknownProgramTypeException(programType);
     }
 
-    public static class UnkownProgramTypeException extends Throwable {
-        public UnkownProgramTypeException(String programType) {
+    public static class UnknownProgramTypeException extends Throwable {
+        public UnknownProgramTypeException(String programType) {
             super("Unknown program type: " + programType);
         }
     }
