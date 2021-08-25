@@ -123,4 +123,64 @@ class ScholarshipServiceTest {
 
         Assertions.assertEquals(0, actual);
     }
+
+
+    //////
+    @Test
+    void PhD_full_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+
+        ScholarshipService service = new ScholarshipService();
+
+        int actual = service.calculate(
+                new Transcript(
+                        "PhD",
+                        new Course("Algorithm", 90, 3),
+                        new Course("Computer Internet", 90, 2),
+                        new Course("Operating System", 90, 3)
+                ));
+
+        Assertions.assertEquals(40_000, actual);
+    }
+
+    @Test
+    void PhD_half_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+
+        ScholarshipService service = new ScholarshipService();
+
+        int actual = service.calculate(new Transcript(
+                "PhD",
+                new Course("Algorithm", 80, 3),
+                new Course("Computer Internet", 80, 2),
+                new Course("Operating System", 80, 3)
+
+        ));
+
+        Assertions.assertEquals(20_000, actual);
+    }
+
+    @Test
+    void PhD_NO_courses() throws ScholarshipService.UnkownProgramTypeException {
+
+        ScholarshipService service = new ScholarshipService();
+
+        int actual = service.calculate(new Transcript("PhD"));
+
+        Assertions.assertEquals(0, actual);
+    }
+
+    @Test
+    void PhD_NO_scholarship() throws ScholarshipService.UnkownProgramTypeException {
+
+        ScholarshipService service = new ScholarshipService();
+
+        int actual = service.calculate(new Transcript(
+                "PhD",
+                new Course("Algorithm", 79, 3),
+                new Course("Computer Internet", 79, 2),
+                new Course("Operating System", 79, 3)
+
+        ));
+
+        Assertions.assertEquals(0, actual);
+    }
 }
