@@ -8,4 +8,13 @@ import lombok.Data;
 public class Course {
     private String name;
     private int score;
+    private int credit;
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
 }

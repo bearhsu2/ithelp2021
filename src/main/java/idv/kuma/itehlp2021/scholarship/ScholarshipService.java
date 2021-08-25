@@ -4,12 +4,11 @@ import java.util.List;
 
 public class ScholarshipService {
 
-    public int calculate(Transcript transcript) {
+    public int calculate(Transcript transcript) throws UnkownProgramTypeException {
 
         String programType = transcript.getProgramType();
 
         if (programType.equals("Bachelor")) {
-
 
             List<Course> courses = transcript.getCourses();
             if (courses.isEmpty()) return 0; // 不修課跟人家領什麼獎學金！
@@ -32,6 +31,39 @@ public class ScholarshipService {
             }
         }
 
-        return 0;
+
+        if (programType.equals("Master")) {
+
+            List<Course> courses = transcript.getCourses();
+            if (courses.isEmpty()) return 0; // 不修課跟人家領什麼獎學金！
+
+            double totalCredit = 0.001D;
+            double totalWeightedScore = 0D;
+
+            for (Course course : courses) {
+                totalCredit += course.getCredit();
+                totalWeightedScore += course.getScore() * course.getCredit();
+            }
+
+            double weightedAverage = totalWeightedScore / totalCredit;
+
+
+            if (weightedAverage >= 90D) {
+                return 15_000;
+            } else if (weightedAverage >= 80D) {
+                return 7_500;
+            } else {
+                return 0;
+            }
+        }
+
+
+        throw new UnkownProgramTypeException(programType);
+    }
+
+    public static class UnkownProgramTypeException extends Throwable {
+        public UnkownProgramTypeException(String programType) {
+            super("Unknown program type: " + programType);
+        }
     }
 }
