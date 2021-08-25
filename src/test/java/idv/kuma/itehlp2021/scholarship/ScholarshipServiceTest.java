@@ -6,26 +6,28 @@ import org.junit.jupiter.api.Test;
 class ScholarshipServiceTest {
 
     @Test
-    void full_scholarship() {
+    void bachelor_full_scholarship() {
 
         ScholarshipService service = new ScholarshipService();
 
-        int actual = service.calculate(new Transcript(
-                new Course("Algorithm", 70),
-                new Course("Computer Internet", 80),
-                new Course("Operating System", 90)
-
-        ));
+        int actual = service.calculate(
+                new Transcript(
+                        "Bachelor",
+                        new Course("Algorithm", 70),
+                        new Course("Computer Internet", 80),
+                        new Course("Operating System", 90)
+                ));
 
         Assertions.assertEquals(10_000, actual);
     }
 
     @Test
-    void half_scholarship() {
+    void bachelor_half_scholarship() {
 
         ScholarshipService service = new ScholarshipService();
 
         int actual = service.calculate(new Transcript(
+                "Bachelor",
                 new Course("Algorithm", 70),
                 new Course("Computer Internet", 70),
                 new Course("Operating System", 90)
@@ -36,21 +38,22 @@ class ScholarshipServiceTest {
     }
 
     @Test
-    void NO_courses() {
+    void bachelor_NO_courses() {
 
         ScholarshipService service = new ScholarshipService();
 
-        int actual = service.calculate(new Transcript(/*nothing*/));
+        int actual = service.calculate(new Transcript("Bachelor"));
 
         Assertions.assertEquals(0, actual);
     }
 
     @Test
-    void NO_scholarship() {
+    void bachelor_NO_scholarship() {
 
         ScholarshipService service = new ScholarshipService();
 
         int actual = service.calculate(new Transcript(
+                "Bachelor",
                 new Course("Algorithm", 70),
                 new Course("Computer Internet", 70),
                 new Course("Operating System", 70)
