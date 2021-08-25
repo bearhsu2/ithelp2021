@@ -40,7 +40,7 @@ class ScholarshipServiceTest {
 
         ScholarshipService service = new ScholarshipService();
 
-        int actual = service.calculate(new Transcript());
+        int actual = service.calculate(new Transcript(/*nothing*/));
 
         Assertions.assertEquals(0, actual);
     }
