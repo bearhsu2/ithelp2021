@@ -17,11 +17,7 @@ class CheckApplicationServiceTest {
 
 
         LocalDate expected = LocalDate.of(2029, 12, 31);
-
-        MockedStatic<LocalDate> mockedStatic = Mockito.mockStatic(LocalDate.class);
-        mockedStatic.when(LocalDate::now).thenReturn(
-              expected
-        );
+        Mockito.mockStatic(LocalDate.class).when(LocalDate::now).thenReturn(expected);
 
 
         CheckApplicationService service = new CheckApplicationService(fakeRepository);
