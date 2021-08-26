@@ -2,13 +2,12 @@ package idv.kuma.itehlp2021.scholarship.apply;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
 
 
-class CheckApplicationServiceTest {
+class ApplicationCheckerTest {
     @Test
     void all_ok() {
 
@@ -20,7 +19,7 @@ class CheckApplicationServiceTest {
         Mockito.mockStatic(LocalDate.class).when(LocalDate::now).thenReturn(expected);
 
 
-        CheckApplicationService service = new CheckApplicationService(fakeRepository);
+        ApplicationChecker service = new ApplicationChecker(fakeRepository);
 
         Application application = new Application(777L);
 

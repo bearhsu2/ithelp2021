@@ -13,7 +13,7 @@ class ApplyScholarshipServiceTest {
         Application application = new Application(777L);
 
         // 準備假 checker
-        CheckApplicationService checker = mock(CheckApplicationService.class);
+        ApplicationChecker checker = mock(ApplicationChecker.class);
         when(checker.checkTime(application)).thenReturn(true);
 
         // 準備假 repository
@@ -33,7 +33,7 @@ class ApplyScholarshipServiceTest {
         Application application = new Application(777L);
 
         // 準備假 checker
-        CheckApplicationService checker = mock(CheckApplicationService.class);
+        ApplicationChecker checker = mock(ApplicationChecker.class);
         when(checker.checkTime(application)).thenReturn(false);
 
         // 準備假 repository

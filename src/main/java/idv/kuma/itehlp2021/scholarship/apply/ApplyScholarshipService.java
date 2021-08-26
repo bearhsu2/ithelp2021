@@ -2,10 +2,10 @@ package idv.kuma.itehlp2021.scholarship.apply;
 
 public class ApplyScholarshipService {
 
-    private final CheckApplicationService checker;
+    private final ApplicationChecker checker;
     private final ApplicationRepository applicationRepository;
 
-    public ApplyScholarshipService(CheckApplicationService checker, ApplicationRepository applicationRepository) {
+    public ApplyScholarshipService(ApplicationChecker checker, ApplicationRepository applicationRepository) {
         this.checker = checker;
         this.applicationRepository = applicationRepository;
     }

@@ -4,11 +4,11 @@ package idv.kuma.itehlp2021.scholarship.apply;
 import java.time.Clock;
 import java.time.LocalDate;
 
-public class CheckApplicationService {
+public class ApplicationChecker {
 
     private final ScholarshipRepository scholarshipRepository;
 
-    public CheckApplicationService(ScholarshipRepository scholarshipRepository) {
+    public ApplicationChecker(ScholarshipRepository scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository;
     }
 
