@@ -25,6 +25,7 @@ class ApplyScholarshipServiceTest {
         // 驗證：真的有 create 一次
         verify(repository, times(1)).create(application);
     }
+
     @Test
     void check_NOT_ok_then_DONT_create() {
 
