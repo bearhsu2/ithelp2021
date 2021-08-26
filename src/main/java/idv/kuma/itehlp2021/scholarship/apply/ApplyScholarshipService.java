@@ -15,7 +15,5 @@ public class ApplyScholarshipService {
         if (this.checker.checkTime(application)) {
             this.applicationRepository.create(application);
         }
-
-
     }
 }
