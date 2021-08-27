@@ -1,6 +1,5 @@
 package idv.kuma.itehlp2021.scholarship.notify;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -32,7 +32,7 @@ class SendResultEmailServiceTest {
                         new ScholarshipResult()
                 ));
 
-        // 統計 Future 裡 true 與 false 的個數
+        // 檢查 Future 裡 true 與 false 的個數
         int goods = 0;
         int bads = 0;
         for (Future<Boolean> future : futures) {
@@ -42,9 +42,8 @@ class SendResultEmailServiceTest {
                 bads++;
             }
         }
-
-        Assertions.assertEquals(2, goods);
-        Assertions.assertEquals(1, bads);
+        assertEquals(2, goods);
+        assertEquals(1, bads);
 
     }
 }
