@@ -33,14 +33,14 @@ class RegisterControllerTest {
     @Test
     void student_not_found() throws Exception {
 
-        Mockito.doThrow(new StudentNotExistException())
+        Mockito.doThrow(new StudentNotExistException("ANY_MESSAGE"))
                 .when(service)
                 .execute(any(RegisterRequest.class));
 
         MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders
                 .post("/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new RegisterRequest()));
+                .content(objectMapper.writeValueAsString(new RegisterRequest(35L)));
 
         mockMvc.perform(postRequest)
                 .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))

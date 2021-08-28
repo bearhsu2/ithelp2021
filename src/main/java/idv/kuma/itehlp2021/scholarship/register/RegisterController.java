@@ -18,7 +18,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> createTeam(@RequestBody RegisterRequest request) {
+    public ResponseEntity<ApiResponse> register(@RequestBody RegisterRequest request) {
         try {
             service.execute(request);
 
