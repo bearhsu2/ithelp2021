@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,7 +64,7 @@ class RegisterControllerTest {
     private void given_student_not_exists(long studentId) throws StudentNotExistException {
         Mockito.doThrow(new StudentNotExistException("ANY_MESSAGE"))
                 .when(service)
-                .execute(any(RegisterRequest.class));
+                .execute(new RegisterRequest(studentId));
     }
 
 
