@@ -30,13 +30,10 @@ class RegisterControllerTest {
     @MockBean
     private RegisterService service;
 
-
     @Test
     void all_ok() throws Exception {
-
         mockMvc.perform(request("/register", 35L))
                 .andExpect(status().is(HttpStatus.OK.value()));
-
     }
 
     private MockHttpServletRequestBuilder request(String url, long studentId) throws JsonProcessingException {
@@ -48,13 +45,11 @@ class RegisterControllerTest {
 
     @Test
     void student_not_found() throws Exception {
-
         given_student_not_exists(35L);
 
         mockMvc.perform(request("/register", 35L))
                 .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(content().json(bad_response(987)));
-
     }
 
     private String bad_response(int errorCode) throws JsonProcessingException {
