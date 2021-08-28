@@ -1,5 +1,6 @@
 package idv.kuma.itehlp2021.scholarship.register;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,31 +31,42 @@ class RegisterControllerTest {
     @MockBean
     private RegisterService service;
 
+
     @Test
-    void student_not_found() throws Exception {
+    void all_ok() throws Exception {
 
-        Mockito.doThrow(new StudentNotExistException("ANY_MESSAGE"))
-                .when(service)
-                .execute(any(RegisterRequest.class));
-
-        MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders
-                .post("/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new RegisterRequest(35L)));
-
-        mockMvc.perform(postRequest)
-                .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.bad(987))));
+        mockMvc.perform(request("/register", 35L))
+                .andExpect(status().is(HttpStatus.OK.value()));
 
     }
 
+    private MockHttpServletRequestBuilder request(String url, long studentId) throws JsonProcessingException {
+        return MockMvcRequestBuilders
+                .post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(new RegisterRequest(studentId)));
+    }
 
-//
-//    @Test
-//    void all_ok() throws Exception {
-//        CreateTeamRequest requestBody = request_body_with_match_and_captain(anyMatchId, captainPlayerKey);
-//        mockMvc.perform(make_request(requestBody))
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.empty())));
-//    }
+    @Test
+    void student_not_found() throws Exception {
+
+        given_student_not_exists(35L);
+
+        mockMvc.perform(request("/register", 35L))
+                .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(content().json(bad_response(987)));
+
+    }
+
+    private String bad_response(int errorCode) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(ApiResponse.bad(errorCode));
+    }
+
+    private void given_student_not_exists(long studentId) throws StudentNotExistException {
+        Mockito.doThrow(new StudentNotExistException("ANY_MESSAGE"))
+                .when(service)
+                .execute(any(RegisterRequest.class));
+    }
+
+
 }
