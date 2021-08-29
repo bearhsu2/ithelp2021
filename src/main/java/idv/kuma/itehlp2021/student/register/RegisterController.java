@@ -1,4 +1,4 @@
-package idv.kuma.itehlp2021.scholarship.register;
+package idv.kuma.itehlp2021.student.register;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

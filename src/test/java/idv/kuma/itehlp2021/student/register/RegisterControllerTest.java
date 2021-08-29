@@ -1,4 +1,4 @@
-package idv.kuma.itehlp2021.scholarship.register;
+package idv.kuma.itehlp2021.student.register;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
