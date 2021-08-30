@@ -26,22 +26,6 @@ public class ScholarshipService {
 
     }
 
-    private int calculatePhD(Transcript transcript) {
-
-
-        return phDScholarshipCalculator.calculatePhD(transcript);
-    }
-
-    private int calculateMaster(Transcript transcript) {
-
-
-        return masterScholarshipCalculator.calculateMaster(transcript);
-    }
-
-    private int calculateBachelor(Transcript transcript) {
-
-        return bachelorScholarshipCalculator.calculateBachelor(transcript);
-    }
 
     public static class UnknownProgramTypeException extends Throwable {
         public UnknownProgramTypeException(String programType) {
