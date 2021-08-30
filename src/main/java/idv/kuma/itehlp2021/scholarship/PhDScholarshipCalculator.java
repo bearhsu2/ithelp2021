@@ -2,11 +2,11 @@ package idv.kuma.itehlp2021.scholarship;
 
 import java.util.List;
 
-public class PhDScholarshipCalculator {
-    public PhDScholarshipCalculator() {
-    }
+public class PhDScholarshipCalculator implements Calculator {
 
-    int calculatePhD(Transcript transcript) {
+
+    @Override
+    public int calculate(Transcript transcript) {
         List<Course> courses = transcript.getCourses();
         if (courses.isEmpty()) return 0; // 不修課跟人家領什麼獎學金！
 

@@ -2,28 +2,24 @@ package idv.kuma.itehlp2021.scholarship;
 
 public class ScholarshipService {
 
-    private final BachelorScholarshipCalculator bachelorScholarshipCalculator = new BachelorScholarshipCalculator();
-    private final MasterScholarshipCalculator masterScholarshipCalculator = new MasterScholarshipCalculator();
-    private final PhDScholarshipCalculator phDScholarshipCalculator = new PhDScholarshipCalculator();
-
     public int calculate(Transcript transcript) throws UnknownProgramTypeException {
 
-        String programType = transcript.getProgramType();
+        Calculator calculator = findCalculator(transcript.getProgramType());
+        return calculator.calculate(transcript);
 
-        if (programType.equals("Bachelor")) {
-            return bachelorScholarshipCalculator.calculateBachelor(transcript);
+    }
+
+    private Calculator findCalculator(String programType) throws UnknownProgramTypeException {
+        switch (programType) {
+            case "Bachelor":
+                return new BachelorScholarshipCalculator();
+            case "Master":
+                return new MasterScholarshipCalculator();
+            case "PhD":
+                return new PhDScholarshipCalculator();
+            default:
+                throw new UnknownProgramTypeException(programType);
         }
-
-        if (programType.equals("Master")) {
-            return masterScholarshipCalculator.calculateMaster(transcript);
-        }
-
-        if (programType.equals("PhD")) {
-            return phDScholarshipCalculator.calculatePhD(transcript);
-        }
-
-        throw new UnknownProgramTypeException(programType);
-
     }
 
 

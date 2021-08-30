@@ -2,11 +2,10 @@ package idv.kuma.itehlp2021.scholarship;
 
 import java.util.List;
 
-public class BachelorScholarshipCalculator {
-    public BachelorScholarshipCalculator() {
-    }
+public class BachelorScholarshipCalculator implements Calculator {
 
-    int calculateBachelor(Transcript transcript) {
+    @Override
+    public int calculate(Transcript transcript) {
         List<Course> courses = transcript.getCourses();
         if (courses.isEmpty()) return 0; // 不修課跟人家領什麼獎學金！
 
