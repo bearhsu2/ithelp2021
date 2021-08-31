@@ -17,6 +17,25 @@ public class Transcript {
         this.courses = Arrays.asList(courses);
     }
 
+    public double calculateWeightedAverage() {
+
+
+        double totalCredit = 0.001D;
+        double totalWeightedScore = 0D;
+
+        for (Course course : courses) {
+            totalCredit += course.getCredit();
+            totalWeightedScore += course.getScore() * course.getCredit();
+        }
+
+        double weightedAverage = totalWeightedScore / totalCredit;
+        return weightedAverage;
+    }
+
+    boolean hasNoCourses() {
+        return this.courses.isEmpty();
+    }
+
     public String getProgramType() {
         return programType;
     }
