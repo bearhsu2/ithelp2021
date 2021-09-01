@@ -3,8 +3,8 @@ package idv.kuma.itehlp2021.course;
 
 public class DistanceChecker {
 
-    private CourseRepository courseRepository;
-    private DistanceCalculator distanceCalculator;
+    private final CourseRepository courseRepository;
+    private final DistanceCalculator distanceCalculator;
 
     public DistanceChecker(CourseRepository courseRepository, DistanceCalculator distanceCalculator) {
         this.courseRepository = courseRepository;
