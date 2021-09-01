@@ -1,49 +1,49 @@
 package idv.kuma.itehlp2021.course;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DistanceCheckerTest {
     @Test
     void closed_enough() {
 
-        DistanceCalculator calculator = Mockito.mock(DistanceCalculator.class);
-        Mockito.when(calculator.calculate(1D, 1D, 0D, 0D))
-                .thenReturn(49D);
+        DistanceChecker distanceChecker = new DistanceChecker(
+                dummy_repository(9527L, 0D, 0D),
+                dummy_calculator(1D, 1D, 0D, 0D, 49D));
+
+        assertTrue(distanceChecker.checkDistance(9527L, 1D, 1D));
+
+    }
+
+    private CourseRepository dummy_repository(long courseId, double classroomLongitude, double classroomLatitude) {
+        Course course = new Course(new ClassRoom(classroomLongitude, classroomLatitude));
 
         CourseRepository repository = Mockito.mock(CourseRepository.class);
-        Course course = new Course(new ClassRoom(0D, 0D));
-
-        Mockito.when(repository.find(9527L))
+        Mockito.when(repository.find(courseId))
                 .thenReturn(course);
+        return repository;
+    }
 
-        DistanceChecker distanceChecker = new DistanceChecker(repository, calculator);
-
-        boolean actual = distanceChecker.checkDistance(9527L, 1D, 1D);
-
-        Assertions.assertEquals(true, actual);
-
+    private DistanceCalculator dummy_calculator(double long1, double lat1, double long2, double lat2, double distance) {
+        DistanceCalculator calculator = Mockito.mock(DistanceCalculator.class);
+        Mockito.when(calculator.calculate(long1, lat1, long2, lat2))
+                .thenReturn(distance);
+        return calculator;
     }
 
     @Test
     void too_far() {
 
-        DistanceCalculator calculator = Mockito.mock(DistanceCalculator.class);
-        Mockito.when(calculator.calculate(99D, 99D, 0D, 0D))
-                .thenReturn(51D);
-
-        CourseRepository repository = Mockito.mock(CourseRepository.class);
-        Course course = new Course(new ClassRoom(0D, 0D));
-
-        Mockito.when(repository.find(9527L))
-                .thenReturn(course);
-
-        DistanceChecker distanceChecker = new DistanceChecker(repository, calculator);
+        DistanceChecker distanceChecker = new DistanceChecker(
+                dummy_repository(9527L, 0D, 0D),
+                dummy_calculator(99D, 99D, 0D, 0D, 51D));
 
         boolean actual = distanceChecker.checkDistance(9527L, 99D, 99D);
 
-        Assertions.assertEquals(false, actual);
+        assertFalse(actual);
 
     }
 }
