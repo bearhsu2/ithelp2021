@@ -11,7 +11,7 @@ public class DistanceChecker {
         this.distanceCalculator = distanceCalculator;
     }
 
-    public boolean checkDistance(long courseId, double longitude, double latitude) {
+    public boolean checkDistance(long courseId, Position position) {
 
         Course course = courseRepository.find(courseId);
 
@@ -20,7 +20,7 @@ public class DistanceChecker {
         double classRoomLongitude = classRoom.getLongitude();
         double classRoomLatitude = classRoom.getLatitude();
 
-        double distance = distanceCalculator.calculate(longitude, latitude, classRoomLongitude, classRoomLatitude);
+        double distance = distanceCalculator.calculate(position, classRoomLongitude, classRoomLatitude);
 
         return distance < 50D;
     }
