@@ -41,9 +41,7 @@ class DistanceCheckerTest {
                 dummy_repository(9527L, 0D, 0D),
                 dummy_calculator(99D, 99D, 0D, 0D, 51D));
 
-        boolean actual = distanceChecker.checkDistance(9527L, 99D, 99D);
-
-        assertFalse(actual);
+        assertFalse(distanceChecker.checkDistance(9527L, 99D, 99D));
 
     }
 }
