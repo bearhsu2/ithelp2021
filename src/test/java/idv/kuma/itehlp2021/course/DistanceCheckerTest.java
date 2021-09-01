@@ -14,15 +14,15 @@ class DistanceCheckerTest {
         Position classroomPosition = new Position(0D, 0D);
 
         DistanceChecker distanceChecker = new DistanceChecker(
-                dummy_repository(9527L, 0D, 0D),
+                dummy_repository(9527L, classroomPosition),
                 dummy_calculator(49D, studentPosition, classroomPosition));
 
         assertTrue(distanceChecker.checkDistance(9527L, studentPosition));
 
     }
 
-    private CourseRepository dummy_repository(long courseId, double classroomLongitude, double classroomLatitude) {
-        Course course = new Course(new ClassRoom(classroomLongitude, classroomLatitude));
+    private CourseRepository dummy_repository(long courseId, Position position) {
+        Course course = new Course(new ClassRoom(position.getLongitude(), position.getLatitude()));
 
         CourseRepository repository = Mockito.mock(CourseRepository.class);
         Mockito.when(repository.find(courseId))
@@ -43,7 +43,7 @@ class DistanceCheckerTest {
         Position classroomPosition = new Position(0D, 0D);
 
         DistanceChecker distanceChecker = new DistanceChecker(
-                dummy_repository(9527L, 0D, 0D),
+                dummy_repository(9527L, classroomPosition),
                 dummy_calculator(51D, studentPosition, classroomPosition));
 
         assertFalse(distanceChecker.checkDistance(9527L, studentPosition));
