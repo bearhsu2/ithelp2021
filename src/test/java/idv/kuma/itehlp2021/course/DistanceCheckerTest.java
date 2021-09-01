@@ -22,7 +22,7 @@ class DistanceCheckerTest {
     }
 
     private CourseRepository dummy_repository(long courseId, Position position) {
-        Course course = new Course(new ClassRoom(position.getLongitude(), position.getLatitude()));
+        Course course = new Course(new ClassRoom(position));
 
         CourseRepository repository = Mockito.mock(CourseRepository.class);
         Mockito.when(repository.find(courseId))
@@ -32,7 +32,7 @@ class DistanceCheckerTest {
 
     private DistanceCalculator dummy_calculator(double distance, Position position1, Position position2) {
         DistanceCalculator calculator = Mockito.mock(DistanceCalculator.class);
-        Mockito.when(calculator.calculate(position1, position2.getLongitude(), position2.getLatitude()))
+        Mockito.when(calculator.calculate(position1, position2))
                 .thenReturn(distance);
         return calculator;
     }
