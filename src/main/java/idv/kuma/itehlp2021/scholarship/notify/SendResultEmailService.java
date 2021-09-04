@@ -26,4 +26,8 @@ public class SendResultEmailService {
         return futures;
 
     }
+
+    public void send(long studentId, String message) {
+        // do nothing (TBD)
+    }
 }
