@@ -16,16 +16,31 @@ class FindTopAndNotifyServiceTest {
     @Test
     void one_student() {
 
-        Mockito.when(repository.findHighestScore("2021-fall", 9527L))
+        given_highest_score_students("2021-fall", 9527L, transcript(55688L));
+
+        when_execute_service("2021-fall", 9527L);
+
+        then_send_email_like(55688L, 1);
+
+    }
+
+    private void then_send_email_like(long studentId, int invokes) {
+        Mockito.verify(emailService, Mockito.times(invokes))
+                .send(studentId, "Congratulations! You've got Scholarship");
+    }
+
+    private void when_execute_service(String semester, long courseId) {
+        service.execute(semester, courseId);
+    }
+
+    private Transcript transcript(long studentId) {
+        return new Transcript(studentId);
+    }
+
+    private void given_highest_score_students(String semester, long courseId, Transcript... transcripts) {
+        Mockito.when(repository.findHighestScore(semester, courseId))
                 .thenReturn(Arrays.asList(
-                        new Transcript(55688L)
+                        transcripts
                 ));
-
-        service.execute("2021-fall", 9527L);
-
-        Mockito.verify(emailService, Mockito.times(1))
-                .send(55688L, "Congratulations! You've got Scholarship");
-
-
     }
 }
