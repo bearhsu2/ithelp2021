@@ -47,9 +47,14 @@ class FindTopAndNotifyServiceTest {
 
         when_execute_service("2021-fall", 9527L);
 
+        then_NEVER_send_emails();
+
+
+    }
+
+    private void then_NEVER_send_emails() {
         Mockito.verify(emailService, Mockito.times(0))
                 .send(anyLong(), eq("Congratulations! You've got Scholarship"));
-
     }
 
 
