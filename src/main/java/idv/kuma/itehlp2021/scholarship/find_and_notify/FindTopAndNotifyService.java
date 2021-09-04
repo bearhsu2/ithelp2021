@@ -17,7 +17,7 @@ public class FindTopAndNotifyService {
 
     public void execute(String semester, long courseId) {
 
-        List<Transcript> transcripts = repository.find(semester, courseId);
+        List<Transcript> transcripts = repository.findHighestScore(semester, courseId);
 
         for (Transcript transcript : transcripts) {
 
