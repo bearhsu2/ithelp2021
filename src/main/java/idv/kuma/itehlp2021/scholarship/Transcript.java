@@ -12,6 +12,10 @@ public class Transcript {
     private String programType;
     private List<Course> courses;
 
+    public Transcript(long studentId) {
+        this.studentId = studentId;
+    }
+
     public Transcript(String programType, Course... courses) {
         this.programType = programType;
         this.courses = Arrays.asList(courses);
