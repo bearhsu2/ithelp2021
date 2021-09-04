@@ -24,6 +24,19 @@ class FindTopAndNotifyServiceTest {
 
     }
 
+    @Test
+    void many_students() {
+
+        given_highest_score_students("2021-fall", 9527L,
+                transcript(55688L), transcript(3345678L));
+
+        when_execute_service("2021-fall", 9527L);
+
+        then_send_email_like(55688L, 1);
+        then_send_email_like(3345678L, 1);
+
+    }
+
     private void then_send_email_like(long studentId, int invokes) {
         Mockito.verify(emailService, Mockito.times(invokes))
                 .send(studentId, "Congratulations! You've got Scholarship");
