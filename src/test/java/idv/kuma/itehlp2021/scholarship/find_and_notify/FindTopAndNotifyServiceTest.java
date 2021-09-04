@@ -7,6 +7,9 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+
 class FindTopAndNotifyServiceTest {
 
     private final TranscriptRepository repository = Mockito.mock(TranscriptRepository.class);
@@ -36,6 +39,19 @@ class FindTopAndNotifyServiceTest {
         then_send_email_like(3345678L, 1);
 
     }
+
+    @Test
+    void NO_students() {
+
+        given_highest_score_students("2021-fall", 9527L);
+
+        when_execute_service("2021-fall", 9527L);
+
+        Mockito.verify(emailService, Mockito.times(0))
+                .send(anyLong(), eq("Congratulations! You've got Scholarship"));
+
+    }
+
 
     private void then_send_email_like(long studentId, int invokes) {
         Mockito.verify(emailService, Mockito.times(invokes))
