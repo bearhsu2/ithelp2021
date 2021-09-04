@@ -9,18 +9,17 @@ import java.util.Arrays;
 
 class FindTopAndNotifyServiceTest {
 
+    private final TranscriptRepository repository = Mockito.mock(TranscriptRepository.class);
+    private final SendResultEmailService emailService = Mockito.mock(SendResultEmailService.class);
+    private final FindTopAndNotifyService service = new FindTopAndNotifyService(repository, emailService);
+
     @Test
     void one_student() {
 
-        TranscriptRepository repository = Mockito.mock(TranscriptRepository.class);
         Mockito.when(repository.findHighestScore("2021-fall", 9527L))
                 .thenReturn(Arrays.asList(
                         new Transcript(55688L)
                 ));
-
-        SendResultEmailService emailService = Mockito.mock(SendResultEmailService.class);
-
-        FindTopAndNotifyService service = new FindTopAndNotifyService(repository, emailService);
 
         service.execute("2021-fall", 9527L);
 
