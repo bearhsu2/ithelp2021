@@ -42,6 +42,25 @@ class ApplyScholarshipControllerTest {
 
     }
 
+    @Test
+    void scholarship_NOT_exists() throws Exception {
+
+        assume_scholar_not_exists(55688L);
+
+        mockMvc.perform(request(
+                        "/scholarship/apply"
+                        , application_form(9527L, 55688L)))
+                .andExpect(status().is(400))
+                .andExpect(content().json(bad_response_content(369)));// 369: scholar not exists
+
+    }
+
+    private void assume_scholar_not_exists(long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException {
+        Mockito.doThrow(new ScholarshipNotExistException("ANY_MESSAGE"))
+                .when(applyScholarshipService)
+                .apply(application_form(9527L, scholarshipId));
+    }
+
     private String bad_response_content(int errorCode) throws JsonProcessingException {
         return objectMapper.writeValueAsString(ApiResponse.bad(errorCode));
     }
@@ -54,7 +73,7 @@ class ApplyScholarshipControllerTest {
         return request;
     }
 
-    private void assume_student_not_exist(long studentId) throws StudentNotExistException {
+    private void assume_student_not_exist(long studentId) throws StudentNotExistException, ScholarshipNotExistException {
         Mockito.doThrow(new StudentNotExistException("ANY_MESSAGE"))
                 .when(applyScholarshipService)
                 .apply(application_form(studentId, 55688L));

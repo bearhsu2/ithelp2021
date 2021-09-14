@@ -2,6 +2,7 @@ package idv.kuma.itehlp2021.scholarship.apply.adapter;
 
 import idv.kuma.itehlp2021.scholarship.apply.ApplyScholarshipService;
 import idv.kuma.itehlp2021.student.register.ApiResponse;
+import idv.kuma.itehlp2021.student.register.StudentNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +21,14 @@ public class ApplyScholarshipController {
 
     @PostMapping("/scholarship/apply")
     public ResponseEntity<ApiResponse> apply(@RequestBody ApplicationForm applicationForm) {
-
-        return ResponseEntity.status(400).body(ApiResponse.bad(987));
-
+        try {
+            applyScholarshipService.apply(applicationForm);
+        } catch (StudentNotExistException e) {
+            return ResponseEntity.status(400).body(ApiResponse.bad(987));
+        } catch (ScholarshipNotExistException e) {
+            return ResponseEntity.status(400).body(ApiResponse.bad(369));
+        }
+        return null;
     }
 
 }
