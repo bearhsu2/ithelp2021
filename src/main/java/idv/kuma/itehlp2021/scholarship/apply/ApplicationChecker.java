@@ -1,9 +1,11 @@
 package idv.kuma.itehlp2021.scholarship.apply;
 
 
-import java.time.Clock;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 
+@Component
 public class ApplicationChecker {
 
     private final ScholarshipRepository scholarshipRepository;

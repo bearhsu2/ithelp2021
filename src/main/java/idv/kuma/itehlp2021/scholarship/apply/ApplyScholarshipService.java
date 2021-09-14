@@ -1,5 +1,10 @@
 package idv.kuma.itehlp2021.scholarship.apply;
 
+import idv.kuma.itehlp2021.scholarship.apply.adapter.ApplicationForm;
+import idv.kuma.itehlp2021.student.register.StudentNotExistException;
+import org.springframework.stereotype.Component;
+
+@Component
 public class ApplyScholarshipService {
 
     private final ApplicationChecker checker;
@@ -15,5 +20,9 @@ public class ApplyScholarshipService {
         if (this.checker.checkTime(application)) {
             this.applicationRepository.create(application);
         }
+    }
+
+    public void apply(ApplicationForm applicationForm) throws StudentNotExistException {
+
     }
 }
