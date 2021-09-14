@@ -45,7 +45,7 @@ class ApplyScholarshipControllerTest {
     @Test
     void scholarship_NOT_exists() throws Exception {
 
-        assume_scholar_not_exists(55688L);
+        assume_scholarship_not_exists(55688L);
 
         mockMvc.perform(request(
                         "/scholarship/apply"
@@ -55,7 +55,7 @@ class ApplyScholarshipControllerTest {
 
     }
 
-    private void assume_scholar_not_exists(long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException {
+    private void assume_scholarship_not_exists(long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException {
         Mockito.doThrow(new ScholarshipNotExistException("ANY_MESSAGE"))
                 .when(applyScholarshipService)
                 .apply(application_form(9527L, scholarshipId));
