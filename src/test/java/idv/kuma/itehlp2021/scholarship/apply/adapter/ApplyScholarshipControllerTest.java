@@ -58,9 +58,7 @@ class ApplyScholarshipControllerTest {
     @Test
     void data_access_error() throws Exception {
 
-        Mockito.doThrow(new DataAccessErrorException("ANY_MESSAGE"))
-                .when(applyScholarshipService)
-                .apply(application_form(9527L, 55688L));
+        assume_data_access_would_fail(9527L, 55688L);
 
         mockMvc.perform(request(
                         "/scholarship/apply"
@@ -68,6 +66,12 @@ class ApplyScholarshipControllerTest {
                 .andExpect(status().is(500))
                 .andExpect(content().json(bad_response_content(666)));// 666: data access error
 
+    }
+
+    private void assume_data_access_would_fail(long studentId, long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException, DataAccessErrorException {
+        Mockito.doThrow(new DataAccessErrorException("ANY_MESSAGE"))
+                .when(applyScholarshipService)
+                .apply(application_form(studentId, scholarshipId));
     }
 
     private void assume_scholarship_not_exists(long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException, DataAccessErrorException {
