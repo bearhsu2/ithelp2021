@@ -1,9 +1,8 @@
 package idv.kuma.itehlp2021.scholarship.apply;
 
 import idv.kuma.itehlp2021.scholarship.apply.adapter.ApplicationForm;
+import idv.kuma.itehlp2021.scholarship.apply.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.apply.adapter.DataAccessErrorException;
-import idv.kuma.itehlp2021.scholarship.apply.adapter.ScholarshipNotExistException;
-import idv.kuma.itehlp2021.student.register.StudentNotExistException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,7 +23,7 @@ public class ApplyScholarshipService {
         }
     }
 
-    public void apply(ApplicationForm applicationForm) throws StudentNotExistException, ScholarshipNotExistException, DataAccessErrorException {
-
+    public void apply(ApplicationForm applicationForm) throws ClientSideErrorException, DataAccessErrorException {
+        // To be implemented...
     }
 }
