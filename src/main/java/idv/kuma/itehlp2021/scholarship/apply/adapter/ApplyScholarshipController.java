@@ -29,7 +29,9 @@ public class ApplyScholarshipController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(ApiResponse.bad(999));
         }
-        return null;
+
+        return ResponseEntity.status(200).body(ApiResponse.empty());
+
     }
 
 }

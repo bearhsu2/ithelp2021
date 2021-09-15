@@ -29,6 +29,17 @@ class ApplyScholarshipControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    void all_ok() throws Exception {
+
+        mockMvc.perform(request(
+                        "/scholarship/apply"
+                        , application_form(9527L, 55688L)))
+                .andExpect(status().is(200))
+                .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.empty())));
+
+    }
+
+    @Test
     void student_NOT_exists() throws Exception {
 
         assume_student_not_exist(9527L);
