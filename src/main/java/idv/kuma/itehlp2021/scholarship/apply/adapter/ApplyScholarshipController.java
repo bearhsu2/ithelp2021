@@ -27,6 +27,8 @@ public class ApplyScholarshipController {
             return ResponseEntity.status(400).body(ApiResponse.bad(987));
         } catch (ScholarshipNotExistException e) {
             return ResponseEntity.status(400).body(ApiResponse.bad(369));
+        } catch (DataAccessErrorException e) {
+            return ResponseEntity.status(500).body(ApiResponse.bad(666));
         }
         return null;
     }

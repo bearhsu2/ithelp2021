@@ -23,9 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class ApplyScholarshipControllerTest {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @MockBean
-    ApplyScholarshipService applyScholarshipService;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ApplyScholarshipService applyScholarshipService;
     @Autowired
     private MockMvc mockMvc;
 
@@ -55,7 +55,22 @@ class ApplyScholarshipControllerTest {
 
     }
 
-    private void assume_scholarship_not_exists(long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException {
+    @Test
+    void data_access_error() throws Exception {
+
+        Mockito.doThrow(new DataAccessErrorException("ANY_MESSAGE"))
+                .when(applyScholarshipService)
+                .apply(application_form(9527L, 55688L));
+
+        mockMvc.perform(request(
+                        "/scholarship/apply"
+                        , application_form(9527L, 55688L)))
+                .andExpect(status().is(500))
+                .andExpect(content().json(bad_response_content(666)));// 666: data access error
+
+    }
+
+    private void assume_scholarship_not_exists(long scholarshipId) throws StudentNotExistException, ScholarshipNotExistException, DataAccessErrorException {
         Mockito.doThrow(new ScholarshipNotExistException("ANY_MESSAGE"))
                 .when(applyScholarshipService)
                 .apply(application_form(9527L, scholarshipId));
@@ -73,7 +88,7 @@ class ApplyScholarshipControllerTest {
         return request;
     }
 
-    private void assume_student_not_exist(long studentId) throws StudentNotExistException, ScholarshipNotExistException {
+    private void assume_student_not_exist(long studentId) throws StudentNotExistException, ScholarshipNotExistException, DataAccessErrorException {
         Mockito.doThrow(new StudentNotExistException("ANY_MESSAGE"))
                 .when(applyScholarshipService)
                 .apply(application_form(studentId, 55688L));
