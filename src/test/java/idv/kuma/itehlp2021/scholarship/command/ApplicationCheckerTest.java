@@ -1,4 +1,4 @@
-package idv.kuma.itehlp2021.scholarship.apply;
+package idv.kuma.itehlp2021.scholarship.command;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,6 @@ class ApplicationCheckerTest {
         boolean actual = service.checkTime(application);
 
         Assertions.assertTrue(actual);
-
 
 
     }

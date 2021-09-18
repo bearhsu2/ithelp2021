@@ -1,4 +1,4 @@
-package idv.kuma.itehlp2021.scholarship.apply.adapter;
+package idv.kuma.itehlp2021.scholarship.command.adapter;
 
 public class ClientSideErrorException extends Exception {
     private final int code;

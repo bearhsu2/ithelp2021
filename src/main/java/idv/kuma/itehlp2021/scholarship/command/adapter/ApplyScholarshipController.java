@@ -1,6 +1,6 @@
-package idv.kuma.itehlp2021.scholarship.apply.adapter;
+package idv.kuma.itehlp2021.scholarship.command.adapter;
 
-import idv.kuma.itehlp2021.scholarship.apply.ApplyScholarshipService;
+import idv.kuma.itehlp2021.scholarship.command.usecase.ApplyScholarshipService;
 import idv.kuma.itehlp2021.student.register.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

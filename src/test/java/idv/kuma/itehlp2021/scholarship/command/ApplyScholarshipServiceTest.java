@@ -1,5 +1,6 @@
-package idv.kuma.itehlp2021.scholarship.apply;
+package idv.kuma.itehlp2021.scholarship.command;
 
+import idv.kuma.itehlp2021.scholarship.command.usecase.ApplyScholarshipService;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
