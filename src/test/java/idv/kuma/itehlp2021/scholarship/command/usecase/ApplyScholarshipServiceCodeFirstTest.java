@@ -1,9 +1,10 @@
-package idv.kuma.itehlp2021.scholarship.command;
+package idv.kuma.itehlp2021.scholarship.command.usecase;
 
+import idv.kuma.itehlp2021.scholarship.command.ApplicationChecker;
+import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.command.adapter.DataAccessErrorException;
-import idv.kuma.itehlp2021.scholarship.command.usecase.ApplyScholarshipServiceCodeFirst;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;

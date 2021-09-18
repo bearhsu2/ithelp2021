@@ -1,5 +1,8 @@
-package idv.kuma.itehlp2021.scholarship.command;
+package idv.kuma.itehlp2021.scholarship.command.usecase;
 
+import idv.kuma.itehlp2021.scholarship.command.ApplicationChecker;
+import idv.kuma.itehlp2021.scholarship.command.Scholarship;
+import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
