@@ -11,25 +11,45 @@ import java.util.Optional;
 
 class ApplyScholarshipServiceTest {
 
+    private StudentRepository studentRepository;
+    private ApplyScholarshipService applyScholarshipService;
+    private ClientSideErrorException exception;
+
     @Test
     void student_not_exist() {
 
-        StudentRepository studentRepository = Mockito.mock(StudentRepository.class);
-        Mockito.when(studentRepository.find(12345L))
-                .thenReturn(Optional.empty());
+        given_student_not_exists(12345L);
 
+        create_service();
 
-        ApplyScholarshipService applyScholarshipService
-                = new ApplyScholarshipService(studentRepository);
+        when_run_then_fail(application_form(12345L, 55688L));
 
-        ApplicationForm form = new ApplicationForm(12345L, 55688L);
+        and_error_code_is(987);
 
-        ClientSideErrorException exception = Assertions.assertThrows(
+    }
+
+    private ApplicationForm application_form(long studentId, long scholarshipId) {
+        return new ApplicationForm(studentId, scholarshipId);
+    }
+
+    private void and_error_code_is(int expected) {
+        Assertions.assertEquals(expected, exception.getCode());
+    }
+
+    private void when_run_then_fail(ApplicationForm form) {
+        exception = Assertions.assertThrows(
                 ClientSideErrorException.class,
                 () -> applyScholarshipService.apply(form)
         );
+    }
 
-        Assertions.assertEquals(987, exception.getCode());
+    private void create_service() {
+        applyScholarshipService = new ApplyScholarshipService(studentRepository);
+    }
 
+    private void given_student_not_exists(long studentId) {
+        studentRepository = Mockito.mock(StudentRepository.class);
+        Mockito.when(studentRepository.find(studentId))
+                .thenReturn(Optional.empty());
     }
 }
