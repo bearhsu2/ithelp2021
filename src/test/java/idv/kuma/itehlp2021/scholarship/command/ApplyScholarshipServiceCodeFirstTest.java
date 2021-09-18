@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-class ApplyScholarshipServiceTest {
+class ApplyScholarshipServiceCodeFirstTest {
 
     @Test
     void check_ok_then_create() throws DataAccessErrorException, ClientSideErrorException {
