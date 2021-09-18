@@ -1,5 +1,8 @@
 package idv.kuma.itehlp2021.scholarship.command;
 
+import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
+import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
+import idv.kuma.itehlp2021.scholarship.command.adapter.DataAccessErrorException;
 import idv.kuma.itehlp2021.scholarship.command.usecase.ApplyScholarshipService;
 import org.junit.jupiter.api.Test;
 
@@ -8,10 +11,10 @@ import static org.mockito.Mockito.*;
 class ApplyScholarshipServiceTest {
 
     @Test
-    void check_ok_then_create() {
+    void check_ok_then_create() throws DataAccessErrorException, ClientSideErrorException {
 
         // 準備申請表
-        Application application = new Application(777L);
+        ApplicationForm application = new ApplicationForm(777L, 55688L);
 
         // 準備假 checker
         ApplicationChecker checker = mock(ApplicationChecker.class);
@@ -28,22 +31,22 @@ class ApplyScholarshipServiceTest {
     }
 
     @Test
-    void check_NOT_ok_then_DONT_create() {
+    void check_NOT_ok_then_DONT_create() throws DataAccessErrorException, ClientSideErrorException {
 
         // 準備申請表
-        Application application = new Application(777L);
+        ApplicationForm applicationForm = new ApplicationForm(777L, 55688L);
 
         // 準備假 checker
         ApplicationChecker checker = mock(ApplicationChecker.class);
-        when(checker.checkTime(application)).thenReturn(false);
+        when(checker.checkTime(applicationForm)).thenReturn(false);
 
         // 準備假 repository
         ApplicationRepository repository = mock(ApplicationRepository.class);
 
         // 執行
-        new ApplyScholarshipService(checker, repository).apply(application);
+        new ApplyScholarshipService(checker, repository).apply(applicationForm);
 
         // 驗證：真的完全有 create 過
-        verify(repository, never()).create(application);
+        verify(repository, never()).create(applicationForm);
     }
 }

@@ -1,6 +1,7 @@
 package idv.kuma.itehlp2021.scholarship.command;
 
 
+import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,9 +15,9 @@ public class ApplicationChecker {
         this.scholarshipRepository = scholarshipRepository;
     }
 
-    public boolean checkTime(Application application) {
+    public boolean checkTime(ApplicationForm applicationForm) {
 
-        Scholarship scholarship = scholarshipRepository.find(application.getScholarshipId());
+        Scholarship scholarship = scholarshipRepository.find(applicationForm.getScholarshipId());
 
         LocalDate deadline = scholarship.getDeadline();
 
