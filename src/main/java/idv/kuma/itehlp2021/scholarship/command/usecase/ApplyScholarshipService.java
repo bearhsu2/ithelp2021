@@ -18,12 +18,6 @@ public class ApplyScholarshipService {
         this.applicationRepository = applicationRepository;
     }
 
-//    public void apply(ApplicationForm applicationForm) {
-//
-//        if (this.checker.checkTime(applicationForm)) {
-//            this.applicationRepository.create(applicationForm);
-//        }
-//    }
 
     public void apply(ApplicationForm applicationForm) throws ClientSideErrorException, DataAccessErrorException {
         // To be implemented...
