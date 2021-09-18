@@ -3,7 +3,7 @@ package idv.kuma.itehlp2021.scholarship.command;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.command.adapter.DataAccessErrorException;
-import idv.kuma.itehlp2021.scholarship.command.usecase.ApplyScholarshipService;
+import idv.kuma.itehlp2021.scholarship.command.usecase.ApplyScholarshipServiceCodeFirst;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
@@ -24,7 +24,7 @@ class ApplyScholarshipServiceCodeFirstTest {
         ApplicationRepository repository = mock(ApplicationRepository.class);
 
         // 執行
-        new ApplyScholarshipService(checker, repository).apply(application);
+        new ApplyScholarshipServiceCodeFirst(checker, repository).apply(application);
 
         // 驗證：真的有 create 一次
         verify(repository, times(1)).create(application);
@@ -44,7 +44,7 @@ class ApplyScholarshipServiceCodeFirstTest {
         ApplicationRepository repository = mock(ApplicationRepository.class);
 
         // 執行
-        new ApplyScholarshipService(checker, repository).apply(applicationForm);
+        new ApplyScholarshipServiceCodeFirst(checker, repository).apply(applicationForm);
 
         // 驗證：真的完全有 create 過
         verify(repository, never()).create(applicationForm);
