@@ -26,8 +26,10 @@ class ApplyScholarshipServiceTest {
 
     }
 
-    private ApplicationForm application_form(long studentId, long scholarshipId) {
-        return new ApplicationForm(studentId, scholarshipId);
+    private void given_student_exists(long studentId) {
+        studentRepository = Mockito.mock(StudentRepository.class);
+        Mockito.when(studentRepository.find(studentId))
+                .thenReturn(Optional.of(new Student("Michael", "Jordan")));
     }
 
     private void when_apply_with_form_then_NO_error(ApplicationForm form) throws ClientSideErrorException, DataAccessErrorException {
@@ -37,16 +39,8 @@ class ApplyScholarshipServiceTest {
         applyScholarshipService.apply(form);
     }
 
-    private void given_student_exists(long studentId) {
-        studentRepository = Mockito.mock(StudentRepository.class);
-        Mockito.when(studentRepository.find(studentId))
-                .thenReturn(Optional.of(new Student("Michael", "Jordan")));
-    }
-
-    private void given_student_NOT_exists(long studentId) {
-        studentRepository = Mockito.mock(StudentRepository.class);
-        Mockito.when(studentRepository.find(studentId))
-                .thenReturn(Optional.empty());
+    private ApplicationForm application_form(long studentId, long scholarshipId) {
+        return new ApplicationForm(studentId, scholarshipId);
     }
 
     @Test
@@ -60,8 +54,10 @@ class ApplyScholarshipServiceTest {
 
     }
 
-    private void then_error_code_is(int code) {
-        Assertions.assertEquals(code, clientSideException.getCode());
+    private void given_student_NOT_exists(long studentId) {
+        studentRepository = Mockito.mock(StudentRepository.class);
+        Mockito.when(studentRepository.find(studentId))
+                .thenReturn(Optional.empty());
     }
 
     private void when_apply_with_form_and_error_happens(ApplicationForm applicationForm) {
@@ -69,5 +65,9 @@ class ApplyScholarshipServiceTest {
 
         this.clientSideException = Assertions.assertThrows(ClientSideErrorException.class,
                 () -> applyScholarshipService.apply(applicationForm));
+    }
+
+    private void then_error_code_is(int code) {
+        Assertions.assertEquals(code, clientSideException.getCode());
     }
 }
