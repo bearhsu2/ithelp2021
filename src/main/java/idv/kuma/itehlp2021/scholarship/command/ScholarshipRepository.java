@@ -10,7 +10,7 @@ public class ScholarshipRepository {
         return null;
     }
 
-    public Optional<Scholarship> findOptional(long l) {
+    public Optional<Scholarship> findOptional(long scholarshipId) {
         return null;
     }
 }

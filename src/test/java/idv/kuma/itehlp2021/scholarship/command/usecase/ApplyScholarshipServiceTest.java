@@ -130,13 +130,17 @@ class ApplyScholarshipServiceTest {
     void when_scholarship_not_exist_then_369() throws RepositoryAccessDataFailException {
 
         given_student_exists(12345L);
-        Mockito.when(scholarshipRepository.findOptional(98765L))
-                .thenReturn(Optional.empty());
+        given_scholarship_NOT_exists(98765L);
 
         when_apply_with_form_and_client_side_error_happens(application_form(12345L, 98765L));
 
         then_client_side_error_code_is(369);
 
+    }
+
+    private void given_scholarship_NOT_exists(long scholarshipId) {
+        Mockito.when(scholarshipRepository.findOptional(scholarshipId))
+                .thenReturn(Optional.empty());
     }
 
 }
