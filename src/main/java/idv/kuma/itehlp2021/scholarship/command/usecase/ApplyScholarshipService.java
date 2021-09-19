@@ -19,6 +19,9 @@ public class ApplyScholarshipService {
     public void apply(ApplicationForm applicationForm) throws ClientSideErrorException, DataAccessErrorException {
 
         // 調閱學生資料
+        studentRepository.find(applicationForm.getStudentId())
+                .orElseThrow(() -> new ClientSideErrorException("cannot find student", 987));
+
         // 調閱獎學金規定的資料
         // 查驗是否符合資格
         // 填寫正式申請書
