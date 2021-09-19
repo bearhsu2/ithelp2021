@@ -30,8 +30,12 @@ public class ApplyScholarshipService {
         }
 
         // 調閱獎學金規定的資料
-        scholarshipRepository.findOptional(applicationForm.getScholarshipId())
-                .orElseThrow(() -> new ClientSideErrorException("cannot find scholarship", 369));
+        try {
+            scholarshipRepository.findOptional(applicationForm.getScholarshipId())
+                    .orElseThrow(() -> new ClientSideErrorException("cannot find scholarship", 369));
+        } catch (RepositoryAccessDataFailException e) {
+            throw new ServerSideErrorException("failed to retrieve scholarship data", 666);
+        }
 
 
         // 查驗是否符合資格

@@ -46,7 +46,7 @@ class ApplyScholarshipServiceTest {
                 .thenReturn(Optional.of(new Student("Michael", "Jordan")));
     }
 
-    private void given_scholarship_exists(long scholarshipId, Scholarship scholarship) {
+    private void given_scholarship_exists(long scholarshipId, Scholarship scholarship) throws RepositoryAccessDataFailException {
         Mockito.when(scholarshipRepository.findOptional(scholarshipId))
                 .thenReturn(Optional.of(scholarship));
     }
@@ -78,7 +78,6 @@ class ApplyScholarshipServiceTest {
     }
 
     private void given_student_NOT_exists(long studentId) throws RepositoryAccessDataFailException {
-        studentRepository = Mockito.mock(StudentRepository.class);
         Mockito.when(studentRepository.find(studentId))
                 .thenReturn(Optional.empty());
     }
@@ -108,14 +107,11 @@ class ApplyScholarshipServiceTest {
     }
 
     private void assume_repository_would_fail_on_getting_student(long studentId) throws RepositoryAccessDataFailException {
-        studentRepository = Mockito.mock(StudentRepository.class);
         Mockito.when(studentRepository.find(studentId))
                 .thenThrow(new RepositoryAccessDataFailException());
     }
 
     private void when_apply_and_fail_on_server_side(ApplicationForm applicationForm) {
-        scholarshipRepository = new ScholarshipRepository();
-        applyScholarshipService = new ApplyScholarshipService(studentRepository, scholarshipRepository);
 
         serverSideErrorException = Assertions.assertThrows(ServerSideErrorException.class,
                 () -> applyScholarshipService.apply(applicationForm));
@@ -138,9 +134,24 @@ class ApplyScholarshipServiceTest {
 
     }
 
-    private void given_scholarship_NOT_exists(long scholarshipId) {
+    private void given_scholarship_NOT_exists(long scholarshipId) throws RepositoryAccessDataFailException {
         Mockito.when(scholarshipRepository.findOptional(scholarshipId))
                 .thenReturn(Optional.empty());
+    }
+
+
+    @Test
+    void when_DB_fail_on_getting_scholarship_then_666() throws RepositoryAccessDataFailException {
+
+        given_student_exists(12345L);
+
+        Mockito.when(scholarshipRepository.findOptional(98765L))
+                .thenThrow(new RepositoryAccessDataFailException());
+
+        when_apply_and_fail_on_server_side(application_form(12345L, 98765L));
+
+        then_server_side_error_code_should_be(666);
+
     }
 
 }
