@@ -4,7 +4,7 @@ import idv.kuma.itehlp2021.scholarship.command.ApplicationChecker;
 import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
-import idv.kuma.itehlp2021.scholarship.command.adapter.DataAccessErrorException;
+import idv.kuma.itehlp2021.scholarship.command.adapter.ServerSideErrorException;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 class ApplyScholarshipServiceCodeFirstTest {
 
     @Test
-    void check_ok_then_create() throws DataAccessErrorException, ClientSideErrorException {
+    void check_ok_then_create() throws ServerSideErrorException, ClientSideErrorException {
 
         // 準備申請表
         ApplicationForm application = new ApplicationForm(777L, 55688L);
@@ -32,7 +32,7 @@ class ApplyScholarshipServiceCodeFirstTest {
     }
 
     @Test
-    void check_NOT_ok_then_DONT_create() throws DataAccessErrorException, ClientSideErrorException {
+    void check_NOT_ok_then_DONT_create() throws ServerSideErrorException, ClientSideErrorException {
 
         // 準備申請表
         ApplicationForm applicationForm = new ApplicationForm(777L, 55688L);

@@ -1,6 +1,7 @@
 package idv.kuma.itehlp2021.student.register;
 
 
+import idv.kuma.itehlp2021.scholarship.command.usecase.RepositoryAccessDataFailException;
 import idv.kuma.itehlp2021.student.Student;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class StudentRepository {
         // do nothing
     }
 
-    public Optional<Student> find(long studentId) {
+    public Optional<Student> find(long studentId) throws RepositoryAccessDataFailException {
         return null;
     }
 }

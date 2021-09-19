@@ -39,6 +39,22 @@ class ApplyScholarshipControllerTest {
 
     }
 
+    private MockHttpServletRequestBuilder request(String urlTemplate, ApplicationForm form) throws JsonProcessingException {
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(urlTemplate)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(form));
+        return request;
+    }
+
+    private ApplicationForm application_form(long studentId, long scholarshipId) {
+        ApplicationForm applicationForm = new ApplicationForm(
+                studentId,
+                scholarshipId
+        );
+        return applicationForm;
+    }
+
     @Test
     void student_NOT_exists() throws Exception {
 
@@ -50,6 +66,16 @@ class ApplyScholarshipControllerTest {
                 .andExpect(status().is(400))
                 .andExpect(content().json(bad_response_content(987)));
 
+    }
+
+    private void assume_student_not_exist(long studentId) throws ServerSideErrorException, ClientSideErrorException {
+        Mockito.doThrow(new ClientSideErrorException("ANY_MESSAGE", 987))
+                .when(applyScholarshipService)
+                .apply(application_form(studentId, 55688L));
+    }
+
+    private String bad_response_content(int errorCode) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(ApiResponse.bad(errorCode));
     }
 
     @Test
@@ -65,6 +91,12 @@ class ApplyScholarshipControllerTest {
 
     }
 
+    private void assume_scholarship_not_exists(long scholarshipId) throws ServerSideErrorException, ClientSideErrorException {
+        Mockito.doThrow(new ClientSideErrorException("ANY_MESSAGE", 369))
+                .when(applyScholarshipService)
+                .apply(application_form(9527L, scholarshipId));
+    }
+
     @Test
     void data_access_error() throws Exception {
 
@@ -76,6 +108,12 @@ class ApplyScholarshipControllerTest {
                 .andExpect(status().is(500))
                 .andExpect(content().json(bad_response_content(666)));// 666: data access error
 
+    }
+
+    private void assume_data_access_would_fail(long studentId, long scholarshipId) throws ServerSideErrorException, ClientSideErrorException {
+        Mockito.doThrow(new ServerSideErrorException("ANY_MESSAGE"))
+                .when(applyScholarshipService)
+                .apply(application_form(studentId, scholarshipId));
     }
 
     @Test
@@ -91,47 +129,9 @@ class ApplyScholarshipControllerTest {
 
     }
 
-    private void given_some_bug_exists(long studentId, long scholarshipId) throws ClientSideErrorException, DataAccessErrorException {
+    private void given_some_bug_exists(long studentId, long scholarshipId) throws ClientSideErrorException, ServerSideErrorException {
         Mockito.doThrow(new RuntimeException("some message"))
                 .when(applyScholarshipService)
                 .apply(application_form(studentId, scholarshipId));
-    }
-
-    private void assume_data_access_would_fail(long studentId, long scholarshipId) throws DataAccessErrorException, ClientSideErrorException {
-        Mockito.doThrow(new DataAccessErrorException("ANY_MESSAGE"))
-                .when(applyScholarshipService)
-                .apply(application_form(studentId, scholarshipId));
-    }
-
-    private void assume_scholarship_not_exists(long scholarshipId) throws DataAccessErrorException, ClientSideErrorException {
-        Mockito.doThrow(new ClientSideErrorException("ANY_MESSAGE", 369))
-                .when(applyScholarshipService)
-                .apply(application_form(9527L, scholarshipId));
-    }
-
-    private String bad_response_content(int errorCode) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(ApiResponse.bad(errorCode));
-    }
-
-    private MockHttpServletRequestBuilder request(String urlTemplate, ApplicationForm form) throws JsonProcessingException {
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(urlTemplate)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(form));
-        return request;
-    }
-
-    private void assume_student_not_exist(long studentId) throws DataAccessErrorException, ClientSideErrorException {
-        Mockito.doThrow(new ClientSideErrorException("ANY_MESSAGE", 987))
-                .when(applyScholarshipService)
-                .apply(application_form(studentId, 55688L));
-    }
-
-    private ApplicationForm application_form(long studentId, long scholarshipId) {
-        ApplicationForm applicationForm = new ApplicationForm(
-                studentId,
-                scholarshipId
-        );
-        return applicationForm;
     }
 }

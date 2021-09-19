@@ -24,7 +24,7 @@ public class ApplyScholarshipController {
             applyScholarshipService.apply(applicationForm);
         } catch (ClientSideErrorException e) {
             return ResponseEntity.status(400).body(ApiResponse.bad(e.getCode()));
-        } catch (DataAccessErrorException e) {
+        } catch (ServerSideErrorException e) {
             return ResponseEntity.status(500).body(ApiResponse.bad(666));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(ApiResponse.bad(999));
