@@ -76,17 +76,29 @@ class ApplyScholarshipServiceTest {
     @Test
     void when_DB_fail_on_getting_student_then_666() throws RepositoryAccessDataFailException {
 
-        studentRepository = Mockito.mock(StudentRepository.class);
-        Mockito.when(studentRepository.find(12345L))
-                .thenThrow(new RepositoryAccessDataFailException());
+        assume_repository_would_fail_on_getting_student(12345L);
 
+        when_apply_and_fail_on_server_side(application_form(12345L, 98765L));
+
+        then_server_side_error_code_should_be(666);
+
+    }
+
+    private void assume_repository_would_fail_on_getting_student(long studentId) throws RepositoryAccessDataFailException {
+        studentRepository = Mockito.mock(StudentRepository.class);
+        Mockito.when(studentRepository.find(studentId))
+                .thenThrow(new RepositoryAccessDataFailException());
+    }
+
+    private void when_apply_and_fail_on_server_side(ApplicationForm applicationForm) {
         applyScholarshipService = new ApplyScholarshipService(studentRepository);
 
         serverSideErrorException = Assertions.assertThrows(ServerSideErrorException.class,
-                () -> applyScholarshipService.apply(application_form(12345L, 98765L)));
+                () -> applyScholarshipService.apply(applicationForm));
+    }
 
-        Assertions.assertEquals(666, serverSideErrorException.getCode());
-
+    private void then_server_side_error_code_should_be(int code) {
+        Assertions.assertEquals(code, serverSideErrorException.getCode());
     }
 
 }
