@@ -1,5 +1,6 @@
 package idv.kuma.itehlp2021.scholarship.command.usecase;
 
+import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ServerSideErrorException;
@@ -9,11 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplyScholarshipService {
 
+    private final ScholarshipRepository scholarshipRepository;
     StudentRepository studentRepository;
 
 
-    public ApplyScholarshipService(StudentRepository studentRepository) {
+    public ApplyScholarshipService(StudentRepository studentRepository, ScholarshipRepository scholarshipRepository) {
         this.studentRepository = studentRepository;
+        this.scholarshipRepository = scholarshipRepository;
     }
 
     public void apply(ApplicationForm applicationForm) throws ClientSideErrorException, ServerSideErrorException {
@@ -27,6 +30,10 @@ public class ApplyScholarshipService {
         }
 
         // 調閱獎學金規定的資料
+        scholarshipRepository.findOptional(applicationForm.getScholarshipId())
+                .orElseThrow(() -> new ClientSideErrorException("cannot find scholarship", 369));
+
+
         // 查驗是否符合資格
         // 填寫正式申請書
         // 存檔
