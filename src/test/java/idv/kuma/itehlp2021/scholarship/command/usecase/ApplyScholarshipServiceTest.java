@@ -165,7 +165,7 @@ class ApplyScholarshipServiceTest {
         given_scholarship_exists(98765L, scholarship(2021, 7, 31));
         given_today_is(2021, 8, 1);
 
-        when_apply_and_fail_on_server_side(application_form(12345L, 98765L));
+        when_apply_with_form_and_client_side_error_happens(application_form(12345L, 98765L));
 
         then_client_side_error_code_is(374);
 
@@ -181,4 +181,6 @@ class ApplyScholarshipServiceTest {
         Mockito.mockStatic(LocalDate.class).when(LocalDate::now).thenReturn(expected);
 
     }
+
+
 }
