@@ -46,6 +46,7 @@ class ApplyScholarshipServiceTest {
     @Test
     void all_ok() throws ServerSideErrorException, ClientSideErrorException, RepositoryAccessDataFailException {
 
+
         Mockito.when(studentRepository.find(12345L))
                 .thenReturn(Optional.of(new Student("Michael", "Jordan", "PhD")));
 
@@ -204,11 +205,9 @@ class ApplyScholarshipServiceTest {
 
         given_scholarship_exists(98765L, scholarship(july31));
 
-
         given_today_is(july31);
 
         when_apply_with_form_and_client_side_error_happens(application_form(12345L, 98765L));
-
 
         then_client_side_error_code_is(375);
 

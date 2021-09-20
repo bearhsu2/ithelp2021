@@ -7,7 +7,7 @@ public class Student {
 
     String lastName;
     String firstName;
-    private String degree = "unassigned";
+    private String program = "unassigned";
     private Student student;
 
     public Student(String firstName, String lastName) {
@@ -15,10 +15,10 @@ public class Student {
         this.firstName = firstName;
     }
 
-    public Student(String firstName, String lastName, String degree) {
+    public Student(String firstName, String lastName, String program) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.degree = degree;
+        this.program = program;
     }
 
     public String getFullName() {

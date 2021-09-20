@@ -35,9 +35,7 @@ public class ApplyScholarshipService {
         checkDeadline(scholarship);
 
         // 查驗是否符合資格
-        if (!student.getDegree().equals("PhD")) {
-            throw new ClientSideErrorException("this scholarship is for PhD students only", 375);
-        }
+        checkProgramIsPhD(student);
         // 填寫正式申請書
         // 存檔
 
@@ -66,6 +64,12 @@ public class ApplyScholarshipService {
         LocalDate now = LocalDate.now();
         if (now.isAfter(deadline)) {
             throw new ClientSideErrorException("application over time", 374);
+        }
+    }
+
+    private void checkProgramIsPhD(Student student) throws ClientSideErrorException {
+        if (!student.getProgram().equals("PhD")) {
+            throw new ClientSideErrorException("this scholarship is for PhD students only", 375);
         }
     }
 }
