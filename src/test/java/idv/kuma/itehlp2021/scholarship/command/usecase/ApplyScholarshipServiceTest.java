@@ -46,10 +46,7 @@ class ApplyScholarshipServiceTest {
     @Test
     void all_ok() throws ServerSideErrorException, ClientSideErrorException, RepositoryAccessDataFailException {
 
-
-        Mockito.when(studentRepository.find(12345L))
-                .thenReturn(Optional.of(new Student("Michael", "Jordan", "PhD")));
-
+        given_student_exists(12345L, "PhD");
 
         given_scholarship_exists(98765L, scholarship());
 
@@ -58,6 +55,11 @@ class ApplyScholarshipServiceTest {
         when_apply_with_form_then_NO_error(application_form(12345L, 98765L));
 
 
+    }
+
+    private void given_student_exists(long studentId, String program) throws RepositoryAccessDataFailException {
+        Mockito.when(studentRepository.find(studentId))
+                .thenReturn(Optional.of(new Student("Michael", "Jordan", program)));
     }
 
     private void given_scholarship_exists(long scholarshipId, Scholarship scholarship) throws RepositoryAccessDataFailException {
@@ -200,8 +202,7 @@ class ApplyScholarshipServiceTest {
     @Test
     void when_disqualified_then_375() throws RepositoryAccessDataFailException {
 
-        Mockito.when(studentRepository.find(12345L))
-                .thenReturn(Optional.of(new Student("Michael", "Jordan", "Bachelor")));
+        given_student_exists(12345L);
 
         given_scholarship_exists(98765L, scholarship(july31));
 

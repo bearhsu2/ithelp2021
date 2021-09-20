@@ -37,6 +37,7 @@ public class ApplyScholarshipService {
         // 查驗是否符合資格
         checkProgramIsPhD(student);
         // 填寫正式申請書
+
         // 存檔
 
     }
