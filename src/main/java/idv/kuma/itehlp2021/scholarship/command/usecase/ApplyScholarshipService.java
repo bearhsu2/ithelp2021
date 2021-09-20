@@ -40,16 +40,13 @@ public class ApplyScholarshipService {
 
         // 查驗是否符合資格
         checkProgramIsPhD(student);
+
         // 填寫正式申請書
         Application application = applicationForm.toApplication();
 
-
         // 存檔
-        try {
-            this.applicationRepository.create(application);
-        } catch (RepositoryAccessDataFailException e) {
-            throw new ServerSideErrorException("failed to create application", 666);
-        }
+        // 思考題：萬一 create 時，DB 資料已存在，該怎麼辦？
+        createApplication(application);
 
     }
 
@@ -82,6 +79,14 @@ public class ApplyScholarshipService {
     private void checkProgramIsPhD(Student student) throws ClientSideErrorException {
         if (!student.getProgram().equals("PhD")) {
             throw new ClientSideErrorException("this scholarship is for PhD students only", 375);
+        }
+    }
+
+    private void createApplication(Application application) throws ServerSideErrorException {
+        try {
+            this.applicationRepository.create(application);
+        } catch (RepositoryAccessDataFailException e) {
+            throw new ServerSideErrorException("failed to create application", 666);
         }
     }
 }

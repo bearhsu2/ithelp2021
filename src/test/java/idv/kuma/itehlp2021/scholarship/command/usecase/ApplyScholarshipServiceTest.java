@@ -223,20 +223,23 @@ class ApplyScholarshipServiceTest {
     @Test
     void when_DB_fail_on_writing_application_to_DB_then_666() throws RepositoryAccessDataFailException {
 
-
         given_student_exists(12345L, "PhD");
 
         given_scholarship_exists(98765L, scholarship());
 
         given_today_is(july31);
 
-        Mockito.doThrow(new RepositoryAccessDataFailException())
-                .when(applicationRepository).create(any(Application.class));
+        assume_DB_would_fail_on_creating_application_data();
 
         when_apply_and_fail_on_server_side(application_form(12345L, 98765L));
 
         then_server_side_error_code_should_be(666);
 
+    }
+
+    private void assume_DB_would_fail_on_creating_application_data() throws RepositoryAccessDataFailException {
+        Mockito.doThrow(new RepositoryAccessDataFailException())
+                .when(applicationRepository).create(any(Application.class));
     }
 
 
