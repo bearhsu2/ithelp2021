@@ -158,4 +158,27 @@ class ApplyScholarshipServiceTest {
                 .thenThrow(new RepositoryAccessDataFailException());
     }
 
+    @Test
+    void when_overtime_then_374() throws RepositoryAccessDataFailException {
+
+        given_student_exists(12345L);
+        given_scholarship_exists(98765L, scholarship(2021, 7, 31));
+        given_today_is(2021, 8, 1);
+
+        when_apply_and_fail_on_server_side(application_form(12345L, 98765L));
+
+        then_client_side_error_code_is(374);
+
+    }
+
+    private Scholarship scholarship(int year, int month, int day) {
+        return new Scholarship(LocalDate.of(year, month, day));
+    }
+
+    private void given_today_is(int year, int month, int day) {
+
+        LocalDate expected = LocalDate.of(2029, 12, 31);
+        Mockito.mockStatic(LocalDate.class).when(LocalDate::now).thenReturn(expected);
+
+    }
 }

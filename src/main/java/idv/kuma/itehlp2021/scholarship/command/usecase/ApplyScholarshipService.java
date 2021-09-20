@@ -9,6 +9,8 @@ import idv.kuma.itehlp2021.student.Student;
 import idv.kuma.itehlp2021.student.register.StudentRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class ApplyScholarshipService {
 
@@ -29,6 +31,12 @@ public class ApplyScholarshipService {
         // 調閱獎學金規定的資料
         Scholarship scholarship = findScholarship(applicationForm);
 
+        // 查驗是否符合資格
+        LocalDate deadline = scholarship.getDeadline();
+        LocalDate now = LocalDate.now();
+        if (now.isAfter(deadline)) {
+            throw new ClientSideErrorException("application over time", 374);
+        }
 
         // 查驗是否符合資格
         // 填寫正式申請書
