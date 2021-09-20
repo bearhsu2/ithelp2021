@@ -177,7 +177,7 @@ class ApplyScholarshipServiceTest {
 
     private void given_today_is(int year, int month, int day) {
 
-        LocalDate expected = LocalDate.of(2029, 12, 31);
+        LocalDate expected = LocalDate.of(year, month, day);
         Mockito.mockStatic(LocalDate.class).when(LocalDate::now).thenReturn(expected);
 
     }
