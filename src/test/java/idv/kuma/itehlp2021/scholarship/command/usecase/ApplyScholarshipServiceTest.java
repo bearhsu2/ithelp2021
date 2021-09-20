@@ -1,5 +1,7 @@
 package idv.kuma.itehlp2021.scholarship.command.usecase;
 
+import idv.kuma.itehlp2021.scholarship.command.Application;
+import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
 import idv.kuma.itehlp2021.scholarship.command.Scholarship;
 import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
@@ -17,6 +19,9 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
+
 class ApplyScholarshipServiceTest {
 
 
@@ -30,6 +35,7 @@ class ApplyScholarshipServiceTest {
     private ClientSideErrorException clientSideException;
     private ServerSideErrorException serverSideErrorException;
     private ScholarshipRepository scholarshipRepository;
+    private ApplicationRepository applicationRepository;
 
     @BeforeAll
     static void beforeAll() {
@@ -40,7 +46,8 @@ class ApplyScholarshipServiceTest {
     void setUp() {
         studentRepository = Mockito.mock(StudentRepository.class);
         scholarshipRepository = Mockito.mock(ScholarshipRepository.class);
-        applyScholarshipService = new ApplyScholarshipService(studentRepository, scholarshipRepository);
+        applicationRepository = Mockito.mock(ApplicationRepository.class);
+        applyScholarshipService = new ApplyScholarshipService(studentRepository, scholarshipRepository, applicationRepository);
     }
 
     @Test
@@ -105,7 +112,6 @@ class ApplyScholarshipServiceTest {
     }
 
     private void when_apply_with_form_and_client_side_error_happens(ApplicationForm applicationForm) {
-        applyScholarshipService = new ApplyScholarshipService(studentRepository, scholarshipRepository);
 
         this.clientSideException = Assertions.assertThrows(ClientSideErrorException.class,
                 () -> applyScholarshipService.apply(applicationForm));
@@ -211,6 +217,25 @@ class ApplyScholarshipServiceTest {
         when_apply_with_form_and_client_side_error_happens(application_form(12345L, 98765L));
 
         then_client_side_error_code_is(375);
+
+    }
+
+    @Test
+    void when_DB_fail_on_writing_application_to_DB_then_666() throws RepositoryAccessDataFailException {
+
+
+        given_student_exists(12345L, "PhD");
+
+        given_scholarship_exists(98765L, scholarship());
+
+        given_today_is(july31);
+
+        Mockito.doThrow(new RepositoryAccessDataFailException())
+                .when(applicationRepository).create(any(Application.class));
+
+        when_apply_and_fail_on_server_side(application_form(12345L, 98765L));
+
+        then_server_side_error_code_should_be(666);
 
     }
 

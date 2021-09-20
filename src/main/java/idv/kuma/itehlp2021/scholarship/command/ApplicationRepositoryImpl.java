@@ -9,4 +9,9 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public void create(ApplicationForm application) {
         // do nothing
     }
+
+    @Override
+    public void create(Application application) {
+        // do nothing
+    }
 }

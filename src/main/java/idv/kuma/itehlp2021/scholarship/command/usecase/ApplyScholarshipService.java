@@ -1,5 +1,7 @@
 package idv.kuma.itehlp2021.scholarship.command.usecase;
 
+import idv.kuma.itehlp2021.scholarship.command.Application;
+import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
 import idv.kuma.itehlp2021.scholarship.command.Scholarship;
 import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
@@ -15,12 +17,14 @@ import java.time.LocalDate;
 public class ApplyScholarshipService {
 
     private final ScholarshipRepository scholarshipRepository;
+    private final ApplicationRepository applicationRepository;
     StudentRepository studentRepository;
 
 
-    public ApplyScholarshipService(StudentRepository studentRepository, ScholarshipRepository scholarshipRepository) {
+    public ApplyScholarshipService(StudentRepository studentRepository, ScholarshipRepository scholarshipRepository, ApplicationRepository applicationRepository) {
         this.studentRepository = studentRepository;
         this.scholarshipRepository = scholarshipRepository;
+        this.applicationRepository = applicationRepository;
     }
 
     public void apply(ApplicationForm applicationForm) throws ClientSideErrorException, ServerSideErrorException {
@@ -37,8 +41,15 @@ public class ApplyScholarshipService {
         // 查驗是否符合資格
         checkProgramIsPhD(student);
         // 填寫正式申請書
+        Application application = applicationForm.toApplication();
+
 
         // 存檔
+        try {
+            this.applicationRepository.create(application);
+        } catch (RepositoryAccessDataFailException e) {
+            throw new ServerSideErrorException("failed to create application", 666);
+        }
 
     }
 
