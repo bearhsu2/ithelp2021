@@ -21,6 +21,9 @@ import static org.mockito.Mockito.mockStatic;
 class ApplyScholarshipServiceTest {
 
 
+    private static final LocalDate july31 = LocalDate.of(2021, 7, 31);
+    private static final LocalDate august01 = LocalDate.of(2021, 8, 1);
+
     private StudentRepository studentRepository;
     private ApplyScholarshipService applyScholarshipService;
     private ClientSideErrorException clientSideException;
