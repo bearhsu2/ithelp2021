@@ -32,11 +32,7 @@ public class ApplyScholarshipService {
         Scholarship scholarship = findScholarship(applicationForm);
 
         // 查驗是否符合資格
-        LocalDate deadline = scholarship.getDeadline();
-        LocalDate now = LocalDate.now();
-        if (now.isAfter(deadline)) {
-            throw new ClientSideErrorException("application over time", 374);
-        }
+        checkDeadline(scholarship);
 
         // 查驗是否符合資格
         // 填寫正式申請書
@@ -59,6 +55,14 @@ public class ApplyScholarshipService {
                     .orElseThrow(() -> new ClientSideErrorException("cannot find scholarship", 369));
         } catch (RepositoryAccessDataFailException e) {
             throw new ServerSideErrorException("failed to retrieve scholarship data", 666);
+        }
+    }
+
+    private void checkDeadline(Scholarship scholarship) throws ClientSideErrorException {
+        LocalDate deadline = scholarship.getDeadline();
+        LocalDate now = LocalDate.now();
+        if (now.isAfter(deadline)) {
+            throw new ClientSideErrorException("application over time", 374);
         }
     }
 }
