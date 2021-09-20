@@ -10,12 +10,16 @@ import idv.kuma.itehlp2021.student.register.StudentRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.mockito.Mockito.mockStatic;
+
 class ApplyScholarshipServiceTest {
+
 
     private StudentRepository studentRepository;
     private ApplyScholarshipService applyScholarshipService;
@@ -34,16 +38,25 @@ class ApplyScholarshipServiceTest {
     @Test
     void all_ok() throws ServerSideErrorException, ClientSideErrorException, RepositoryAccessDataFailException {
 
-        given_student_exists(12345L);
+        Mockito.when(studentRepository.find(12345L))
+                .thenReturn(Optional.of(new Student("Michael", "Jordan", "PhD")));
+
+
         given_scholarship_exists(98765L, scholarship());
 
-        when_apply_with_form_then_NO_error(application_form(12345L, 98765L));
+        given_today_is(2021, 7, 31);
 
-    }
+        LocalDate expected = LocalDate.of(2021, 7, 31);
 
-    private void given_student_exists(long studentId) throws RepositoryAccessDataFailException {
-        Mockito.when(studentRepository.find(studentId))
-                .thenReturn(Optional.of(new Student("Michael", "Jordan")));
+        try (MockedStatic<LocalDate> mocked = mockStatic(LocalDate.class)) {
+
+            mocked.when(LocalDate::now).thenReturn(expected);
+
+            when_apply_with_form_then_NO_error(application_form(12345L, 98765L));
+
+        }
+
+
     }
 
     private void given_scholarship_exists(long scholarshipId, Scholarship scholarship) throws RepositoryAccessDataFailException {
@@ -53,6 +66,16 @@ class ApplyScholarshipServiceTest {
 
     private Scholarship scholarship() {
         return new Scholarship(LocalDate.MAX);
+    }
+
+    private void given_today_is(int year, int month, int day) {
+
+        LocalDate expected = LocalDate.of(year, month, day);
+
+        try (MockedStatic<LocalDate> mocked = mockStatic(LocalDate.class)) {
+            mocked.when(LocalDate::now).thenReturn(expected);
+        }
+
     }
 
     private void when_apply_with_form_then_NO_error(ApplicationForm form) throws ClientSideErrorException, ServerSideErrorException {
@@ -93,7 +116,6 @@ class ApplyScholarshipServiceTest {
         Assertions.assertEquals(code, clientSideException.getCode());
     }
 
-
     @Test
     void when_DB_fail_on_getting_student_then_666() throws RepositoryAccessDataFailException {
 
@@ -121,7 +143,6 @@ class ApplyScholarshipServiceTest {
         Assertions.assertEquals(code, serverSideErrorException.getCode());
     }
 
-
     @Test
     void when_scholarship_not_exist_then_369() throws RepositoryAccessDataFailException {
 
@@ -134,11 +155,15 @@ class ApplyScholarshipServiceTest {
 
     }
 
+    private void given_student_exists(long studentId) throws RepositoryAccessDataFailException {
+        Mockito.when(studentRepository.find(studentId))
+                .thenReturn(Optional.of(new Student("Michael", "Jordan")));
+    }
+
     private void given_scholarship_NOT_exists(long scholarshipId) throws RepositoryAccessDataFailException {
         Mockito.when(scholarshipRepository.findOptional(scholarshipId))
                 .thenReturn(Optional.empty());
     }
-
 
     @Test
     void when_DB_fail_on_getting_scholarship_then_666() throws RepositoryAccessDataFailException {
@@ -175,10 +200,26 @@ class ApplyScholarshipServiceTest {
         return new Scholarship(LocalDate.of(year, month, day));
     }
 
-    private void given_today_is(int year, int month, int day) {
+    @Test
+    void when_disqualified_then_375() throws RepositoryAccessDataFailException {
 
-        LocalDate expected = LocalDate.of(year, month, day);
-        Mockito.mockStatic(LocalDate.class).when(LocalDate::now).thenReturn(expected);
+        Mockito.when(studentRepository.find(12345L))
+                .thenReturn(Optional.of(new Student("Michael", "Jordan", "Bachelor")));
+
+        given_scholarship_exists(98765L, scholarship(2021, 7, 31));
+
+        LocalDate expected = LocalDate.of(2021, 7, 31);
+
+        try (MockedStatic<LocalDate> mocked = mockStatic(LocalDate.class)) {
+
+            mocked.when(LocalDate::now).thenReturn(expected);
+
+            when_apply_with_form_and_client_side_error_happens(application_form(12345L, 98765L));
+
+        }
+
+
+        then_client_side_error_code_is(375);
 
     }
 

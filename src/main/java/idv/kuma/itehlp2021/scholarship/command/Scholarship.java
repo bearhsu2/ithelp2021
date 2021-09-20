@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class Scholarship {
     private LocalDate deadline;
 
+
     public LocalDate getDeadline() {
         return deadline;
     }

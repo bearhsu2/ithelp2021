@@ -35,6 +35,9 @@ public class ApplyScholarshipService {
         checkDeadline(scholarship);
 
         // 查驗是否符合資格
+        if (!student.getDegree().equals("PhD")) {
+            throw new ClientSideErrorException("this scholarship is for PhD students only", 375);
+        }
         // 填寫正式申請書
         // 存檔
 
