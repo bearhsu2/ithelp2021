@@ -1,4 +1,4 @@
-package idv.kuma.itehlp2021.scholarship.command;
+package idv.kuma.itehlp2021.scholarship.command.entity;
 
 import lombok.Data;
 

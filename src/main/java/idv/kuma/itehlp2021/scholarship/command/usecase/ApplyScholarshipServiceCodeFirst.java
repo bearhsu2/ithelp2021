@@ -1,7 +1,5 @@
 package idv.kuma.itehlp2021.scholarship.command.usecase;
 
-import idv.kuma.itehlp2021.scholarship.command.ApplicationChecker;
-import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ServerSideErrorException;

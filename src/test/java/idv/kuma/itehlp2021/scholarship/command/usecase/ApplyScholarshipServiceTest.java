@@ -1,12 +1,10 @@
 package idv.kuma.itehlp2021.scholarship.command.usecase;
 
-import idv.kuma.itehlp2021.scholarship.command.Application;
-import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
-import idv.kuma.itehlp2021.scholarship.command.Scholarship;
-import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ServerSideErrorException;
+import idv.kuma.itehlp2021.scholarship.command.entity.Application;
+import idv.kuma.itehlp2021.scholarship.command.entity.Scholarship;
 import idv.kuma.itehlp2021.student.Student;
 import idv.kuma.itehlp2021.student.register.StudentRepository;
 import org.junit.jupiter.api.Assertions;
