@@ -10,6 +10,12 @@ import java.time.LocalDate;
 public class Scholarship {
     private LocalDate deadline;
 
+    public boolean isOvertime() {
+        LocalDate deadline = getDeadline();
+        LocalDate now = LocalDate.now();
+        boolean isOverTime = now.isAfter(deadline);
+        return isOverTime;
+    }
 
     public LocalDate getDeadline() {
         return deadline;
