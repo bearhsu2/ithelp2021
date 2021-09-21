@@ -9,7 +9,7 @@ import static org.assertj.core.api.Fail.fail;
 
 class RegisterServiceTest {
 
-    private final StudentRepository repository = Mockito.mock(StudentRepository.class);
+    private final StudentRepositoryImpl repository = Mockito.mock(StudentRepositoryImpl.class);
 
     @Test
     void when_student_not_exists() throws DataNotFoundException {
@@ -26,6 +26,19 @@ class RegisterServiceTest {
 
     }
 
+    private void given_student_NOT_exists(long studentId) throws DataNotFoundException {
+        Mockito.doThrow(new DataNotFoundException())
+                .when(repository).register(request(studentId));
+    }
+
+    private RegisterService create_register_service() {
+        return new RegisterService(repository);
+    }
+
+    private RegisterRequest request(long studentId) {
+        return new RegisterRequest(studentId);
+    }
+
     @Test
     void when_student_not_exists_alternative() throws DataNotFoundException {
 
@@ -38,18 +51,5 @@ class RegisterServiceTest {
         assertThat(actualException).hasMessageContaining("not exists");
 
 
-    }
-
-    private RegisterService create_register_service() {
-        return new RegisterService(repository);
-    }
-
-    private void given_student_NOT_exists(long studentId) throws DataNotFoundException {
-        Mockito.doThrow(new DataNotFoundException())
-                .when(repository).register(request(studentId));
-    }
-
-    private RegisterRequest request(long studentId) {
-        return new RegisterRequest(studentId);
     }
 }

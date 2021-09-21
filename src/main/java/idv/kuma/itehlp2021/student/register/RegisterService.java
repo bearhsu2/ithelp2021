@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterService {
 
-    private StudentRepository repository;
+    private final StudentRepository repository;
 
     @Autowired
     public RegisterService(StudentRepository repository) {
