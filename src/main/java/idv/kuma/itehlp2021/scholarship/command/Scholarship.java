@@ -11,11 +11,11 @@ import java.time.LocalDate;
 public class Scholarship {
     private LocalDate deadline;
 
-    public boolean isQualified(Student student) {
+    public boolean checkQualification(Student student) {
         return student.getProgram().equals("PhD");
     }
 
-    public boolean isOvertime() {
+    public boolean checkDeadline() {
         LocalDate deadline = getDeadline();
         LocalDate now = LocalDate.now();
         boolean isOverTime = now.isAfter(deadline);

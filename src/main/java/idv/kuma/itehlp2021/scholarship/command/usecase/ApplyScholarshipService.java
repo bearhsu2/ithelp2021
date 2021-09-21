@@ -68,13 +68,13 @@ public class ApplyScholarshipService {
 
     private void checkDeadline(Scholarship scholarship) throws ClientSideErrorException {
 
-        if (scholarship.isOvertime()) {
+        if (scholarship.checkDeadline()) {
             throw new ClientSideErrorException("application over time", 374);
         }
     }
 
     private void checkProgramIsPhD(Scholarship scholarship, Student student) throws ClientSideErrorException {
-        if (!scholarship.isQualified(student)) {
+        if (!scholarship.checkQualification(student)) {
             throw new ClientSideErrorException("this scholarship is for PhD students only", 375);
         }
     }
