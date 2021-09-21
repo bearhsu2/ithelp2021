@@ -37,7 +37,7 @@ public class ApplyScholarshipService {
         checkDeadline(scholarship);
 
         // 查驗是否符合資格
-        checkProgramIsPhD(student);
+        checkProgramIsPhD(scholarship, student);
 
         // 填寫正式申請書
         Application application = applicationForm.toApplication();
@@ -73,8 +73,8 @@ public class ApplyScholarshipService {
         }
     }
 
-    private void checkProgramIsPhD(Student student) throws ClientSideErrorException {
-        if (!student.getProgram().equals("PhD")) {
+    private void checkProgramIsPhD(Scholarship scholarship, Student student) throws ClientSideErrorException {
+        if (!scholarship.isQualified(student)) {
             throw new ClientSideErrorException("this scholarship is for PhD students only", 375);
         }
     }

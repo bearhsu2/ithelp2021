@@ -1,5 +1,6 @@
 package idv.kuma.itehlp2021.scholarship.command;
 
+import idv.kuma.itehlp2021.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,6 +10,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Scholarship {
     private LocalDate deadline;
+
+    public boolean isQualified(Student student) {
+        return student.getProgram().equals("PhD");
+    }
 
     public boolean isOvertime() {
         LocalDate deadline = getDeadline();
