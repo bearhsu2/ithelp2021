@@ -3,7 +3,7 @@ package idv.kuma.itehlp2021.scholarship.command.usecase;
 import idv.kuma.itehlp2021.scholarship.command.Application;
 import idv.kuma.itehlp2021.scholarship.command.ApplicationRepository;
 import idv.kuma.itehlp2021.scholarship.command.Scholarship;
-import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
+import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepositoryImpl;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ClientSideErrorException;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ServerSideErrorException;
@@ -34,7 +34,7 @@ class ApplyScholarshipServiceTest {
     private ApplyScholarshipService applyScholarshipService;
     private ClientSideErrorException clientSideException;
     private ServerSideErrorException serverSideErrorException;
-    private ScholarshipRepository scholarshipRepository;
+    private ScholarshipRepositoryImpl scholarshipRepository;
     private ApplicationRepository applicationRepository;
 
     @BeforeAll
@@ -45,7 +45,7 @@ class ApplyScholarshipServiceTest {
     @BeforeEach
     void setUp() {
         studentRepository = Mockito.mock(StudentRepository.class);
-        scholarshipRepository = Mockito.mock(ScholarshipRepository.class);
+        scholarshipRepository = Mockito.mock(ScholarshipRepositoryImpl.class);
         applicationRepository = Mockito.mock(ApplicationRepository.class);
         applyScholarshipService = new ApplyScholarshipService(studentRepository, scholarshipRepository, applicationRepository);
     }

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Component
 public class ApplicationChecker {
 
-    private final ScholarshipRepository scholarshipRepository;
+    private final ScholarshipRepositoryImpl scholarshipRepository;
 
-    public ApplicationChecker(ScholarshipRepository scholarshipRepository) {
+    public ApplicationChecker(ScholarshipRepositoryImpl scholarshipRepository) {
         this.scholarshipRepository = scholarshipRepository;
     }
 

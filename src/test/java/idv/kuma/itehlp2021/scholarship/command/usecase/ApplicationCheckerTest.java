@@ -2,7 +2,7 @@ package idv.kuma.itehlp2021.scholarship.command.usecase;
 
 import idv.kuma.itehlp2021.scholarship.command.ApplicationChecker;
 import idv.kuma.itehlp2021.scholarship.command.Scholarship;
-import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepository;
+import idv.kuma.itehlp2021.scholarship.command.ScholarshipRepositoryImpl;
 import idv.kuma.itehlp2021.scholarship.command.adapter.ApplicationForm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class ApplicationCheckerTest {
     @Test
     void all_ok() {
 
-        ScholarshipRepository fakeRepository = Mockito.mock(ScholarshipRepository.class);
+        ScholarshipRepositoryImpl fakeRepository = Mockito.mock(ScholarshipRepositoryImpl.class);
         Mockito.when(fakeRepository.find(55688L)).thenReturn(new Scholarship(LocalDate.MAX));
 
 

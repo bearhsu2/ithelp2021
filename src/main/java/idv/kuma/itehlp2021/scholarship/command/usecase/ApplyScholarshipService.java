@@ -16,7 +16,7 @@ public class ApplyScholarshipService {
 
     private final ScholarshipRepository scholarshipRepository;
     private final ApplicationRepository applicationRepository;
-    StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
 
     public ApplyScholarshipService(StudentRepository studentRepository, ScholarshipRepository scholarshipRepository, ApplicationRepository applicationRepository) {
