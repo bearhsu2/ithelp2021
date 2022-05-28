@@ -8,11 +8,18 @@ import java.util.concurrent.Future;
 
 public class SendResultEmailService {
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(300);
+    private final ExecutorService executorService;
     private final Mailer mailer;
+
+    public SendResultEmailService(Mailer mailer, ExecutorService executorService) {
+        this.mailer = mailer;
+        this.executorService = executorService;
+
+    }
 
     public SendResultEmailService(Mailer mailer) {
         this.mailer = mailer;
+        executorService = Executors.newFixedThreadPool(300);
     }
 
     public List<Future<Boolean>> send(List<ScholarshipResult> results) {
@@ -24,6 +31,16 @@ public class SendResultEmailService {
         }
 
         return futures;
+
+    }
+
+    public void silentSend(List<ScholarshipResult> results) {
+
+        for (ScholarshipResult result : results) {
+            executorService.submit(
+                    () -> mailer.silentSend(result)
+            );
+        }
 
     }
 
